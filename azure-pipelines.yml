@@ -6,66 +6,15 @@ pool:
   demands:
     - agent.name -equals ALA
 
-# steps:
-
-# - script: |
-#     echo $JAVA_HOME
-#     java -version
-#   displayName: 'Debug JDK Setup'
-  
-# - task: JavaToolInstaller@0
-#   displayName: 'Set up JDK 21'
-#   inputs:
-#     versionSpec: '21'
-#     jdkArchitectureOption: 'x64'
-#     jdkSourceOption: 'PreInstalled'
-
-
-variables:
-  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
-  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
-
-container: 'openjdk:17-jdk'
-
 steps:
 - task: Maven@4
-  displayName: 'Maven build'
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'clean package'
-    
-# - task: JavaToolInstaller@0
-#   displayName: 'Use Java 17'
-#   inputs:
-#     versionSpec: '17'
-#     jdkArchitectureOption: 'x64'
-#     jdkSourceOption: 'LocalDirectory'  # Changed from 'PreInstalled'
-#     jdkFile: # Optional: specify custom JDK location
-#     jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk17'
-#     cleanDestinationDirectory: true
-
-- task: Cache@2
-  displayName: 'Cache Maven packages'
-  inputs:
-    key: 'maven | "$(Agent.OS)" | **/pom.xml'
-    restoreKeys: |
-      maven | "$(Agent.OS)"
-      maven
-    path: $(MAVEN_CACHE_FOLDER)
-
-- task: Maven@4
-  displayName: 'Maven clean compile'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'clean compile'
-    options: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+    mavenOptions: '-Xmx3072m -XX:MaxPermSize=512m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'
-
-- task: Maven@4
-  displayName: 'Maven test'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'test'
+    jdkVersionOption: '1.11'  # Adjust to your Java version (e.g., 17, 21)
+    jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    testRunTitle: 'Maven Tests'
+    goals: 'package'
