@@ -31,7 +31,10 @@ steps:
   inputs:
     versionSpec: '17'
     jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+    jdkSourceOption: 'FromSource'  # Changed from 'PreInstalled'
+    jdkFile: # Optional: specify custom JDK location
+    jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk17'
+    cleanDestinationDirectory: true
 
 - task: Cache@2
   displayName: 'Cache Maven packages'
