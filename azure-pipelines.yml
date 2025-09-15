@@ -18,7 +18,12 @@ steps:
     versionSpec: '21'  # Or '8', '11', etc.
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'  # Uses the pre-installed JDK on your agent
-
+- script: |
+    echo $JAVA_HOME
+    echo $JAVA_HOME_21_X64
+    java -version
+  displayName: 'Debug JDK Setup'
+  
 - task: Maven@3
   displayName: 'Maven Build'
   inputs:
