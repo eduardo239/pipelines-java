@@ -25,16 +25,24 @@ variables:
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
+container: 'openjdk:17-jdk'
+
 steps:
-- task: JavaToolInstaller@0
-  displayName: 'Use Java 17'
+- task: Maven@4
+  displayName: 'Maven build'
   inputs:
-    versionSpec: '17'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'LocalDirectory'  # Changed from 'PreInstalled'
-    jdkFile: # Optional: specify custom JDK location
-    jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk17'
-    cleanDestinationDirectory: true
+    mavenPomFile: 'pom.xml'
+    goals: 'clean package'
+    
+# - task: JavaToolInstaller@0
+#   displayName: 'Use Java 17'
+#   inputs:
+#     versionSpec: '17'
+#     jdkArchitectureOption: 'x64'
+#     jdkSourceOption: 'LocalDirectory'  # Changed from 'PreInstalled'
+#     jdkFile: # Optional: specify custom JDK location
+#     jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk17'
+#     cleanDestinationDirectory: true
 
 - task: Cache@2
   displayName: 'Cache Maven packages'
