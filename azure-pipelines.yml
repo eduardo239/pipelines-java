@@ -7,14 +7,17 @@ pool:
     - agent.name -equals ALA
 
 steps:
-- task: JavaToolInstaller@0
-  displayName: 'Set up JDK 11'
-  inputs:
-    versionSpec: '21'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
 
 - script: |
     echo $JAVA_HOME
     java -version
   displayName: 'Debug JDK Setup'
+  
+- task: JavaToolInstaller@0
+  displayName: 'Set up JDK 21'
+  inputs:
+    versionSpec: '21'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
+
