@@ -1,9 +1,25 @@
-# azure-pipelines.yml
 trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Azure Linux Agent'
+  demands:
+    - agent.name -equals ALA
+
+# steps:
+
+# - script: |
+#     echo $JAVA_HOME
+#     java -version
+#   displayName: 'Debug JDK Setup'
+  
+# - task: JavaToolInstaller@0
+#   displayName: 'Set up JDK 21'
+#   inputs:
+#     versionSpec: '21'
+#     jdkArchitectureOption: 'x64'
+#     jdkSourceOption: 'PreInstalled'
+
 
 variables:
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
