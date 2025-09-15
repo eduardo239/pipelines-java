@@ -12,7 +12,15 @@ pool:
     - agent.name -equals ALA
 
 steps:
+- task: JavaToolInstaller@0
+  displayName: 'Set up JDK 11'
+  inputs:
+    versionSpec: '11'  # Or '8', '11', etc.
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'  # Uses the pre-installed JDK on your agent
+
 - task: Maven@3
+  displayName: 'Maven Build'
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
