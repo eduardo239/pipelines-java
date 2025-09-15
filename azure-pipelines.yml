@@ -8,9 +8,9 @@ pool:
 
 steps:
 - task: JavaToolInstaller@0
-  displayName: 'Set up JDK 21'
+  displayName: 'Set up JDK 11'
   inputs:
-    versionSpec: '21'
+    versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 
@@ -18,14 +18,3 @@ steps:
     echo $JAVA_HOME
     java -version
   displayName: 'Debug JDK Setup'
-
-- task: Maven@4
-  displayName: 'Maven Build'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'Path'
-    jdkDirectory: $(JAVA_HOME)
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
