@@ -31,7 +31,7 @@ steps:
   inputs:
     versionSpec: '17'
     jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'FromSource'  # Changed from 'PreInstalled'
+    jdkSourceOption: 'LocalDirectory'  # Changed from 'PreInstalled'
     jdkFile: # Optional: specify custom JDK location
     jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk17'
     cleanDestinationDirectory: true
