@@ -10,7 +10,7 @@ steps:
 - task: JavaToolInstaller@0
   displayName: 'Set up JDK 11'
   inputs:
-    versionSpec: '11'
+    versionSpec: '21'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 
